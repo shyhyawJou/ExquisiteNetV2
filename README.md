@@ -10,7 +10,7 @@
 [ghostnet](https://github.com/huawei-noah/CV-backbones/tree/master/ghostnet_pytorch)
 
 if you only want to use ExquisiteNet, you don't need to download these models.
-if you want to reproduce the results of non-ExquisiteNet mentioned in my [article](https://arxiv.org/abs/2105.09008), remember to add `nn.Dropout(0.2)` into the scripts where models is defined in and comment the weights initialization method to make each layer. 
+if you want to reproduce the results of non-ExquisiteNet mentioned in my [article](https://arxiv.org/abs/2105.09008), remember to add `nn.Dropout(0.2)` into the scripts where models is defined in and comment the weights initialization method to make each layer initialize by default. 
 
 For example, please add `nn.Dropout(0.2)` at `line 177` in torchvision/models/densenet.py
 
