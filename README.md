@@ -10,10 +10,14 @@
 [ghostnet](https://github.com/huawei-noah/CV-backbones/tree/master/ghostnet_pytorch)
 
 if you only want to use ExquisiteNet, you don't need to download these models.
+if you want to reproduce the results of non-ExquisiteNet mentioned in my [article](https://arxiv.org/abs/2105.09008), remember to add `nn.Dropout(0.2)` into the scripts where models is defined in and comment the weights initialization method to make each layer. 
+
+For example, please add `nn.Dropout(0.2)` at `line 177` in torchvision/models/densenet.py
 
 # Training
-python train.py
-In train.py,  
+Run the command `python train.py`
+
+In `train.py`,  
 the variable `data_dir` is the directory of images  
 the variable `optim` is the optimizer  
 the variable `backbone` is the classifiaction model you want to use
@@ -21,3 +25,6 @@ the variable `backbone` is the classifiaction model you want to use
 # Inference
 Defined in the `util.py`  
 `infer_time, loss, acc = util.inference(model, dset["val"], dset_num["val"], batchs_num["val"], loss_func, device)`
+
+# Citation
+[article](https://arxiv.org/abs/2105.09008)
