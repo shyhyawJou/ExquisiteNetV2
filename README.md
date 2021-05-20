@@ -34,4 +34,4 @@ Download [yolov5](https://github.com/ultralytics/yolov5)
 `my.yaml` is the architecture
 
 # Citation
-[article](https://arxiv.org/abs/2105.09008)
+please cite my [article](https://arxiv.org/abs/2105.09008)
