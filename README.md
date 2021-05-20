@@ -19,7 +19,7 @@ For example, please add `nn.Dropout(0.2)` at `line 177` in torchvision/models/de
 Run the command `python train.py`
 
 In `train.py`,  
-the variable `data_dir` is the directory of images  
+the variable `data_dir` is the directory of dataset  
 the variable `optim` is the optimizer  
 the variable `backbone` is the classifiaction model you want to use
 
