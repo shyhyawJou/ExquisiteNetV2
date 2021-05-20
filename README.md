@@ -27,8 +27,8 @@ Defined in the `util.py`
 `infer_time, loss, acc = util.inference(model, dset["val"], dset_num["val"], batchs_num["val"], loss_func, device)`
 
 # Combined with yolov5
-[yolov5](https://github.com/ultralytics/yolov5)
-I have defined it in `my.yaml`
+Download [yolov5](https://github.com/ultralytics/yolov5)  
+`my.yaml` is the architecture
 
 # Citation
 [article](https://arxiv.org/abs/2105.09008)
