@@ -23,6 +23,8 @@ the variable `data_dir` is the directory of images
 the variable `optim` is the optimizer  
 the variable `backbone` is the classifiaction model you want to use
 
+I have no pre-trained weight of ExquisiteNet
+
 # Inference
 Defined in the `util.py`  
 `infer_time, loss, acc = util.inference(model, dset["val"], dset_num["val"], batchs_num["val"], loss_func, device)`
