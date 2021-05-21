@@ -30,8 +30,8 @@ Defined in the `util.py`
 `infer_time, loss, acc = util.inference(model, dset["val"], dset_num["val"], batchs_num["val"], loss_func, device)`
 
 # Combined with yolov5
-Download [yolov5](https://github.com/ultralytics/yolov5)  
-`my.yaml` is the architecture
+Please download [yolov5](https://github.com/ultralytics/yolov5) first.  
+`my.yaml` is the architecture of ExquisiteNetV2-Yolov5. 
 
 # Citation
 please cite my [article](https://arxiv.org/abs/2105.09008)
