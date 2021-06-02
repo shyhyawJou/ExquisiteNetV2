@@ -15,7 +15,7 @@ if you want to reproduce the results of non-ExquisiteNet mentioned in my [articl
 
 For example, please add `nn.Dropout(0.2)` at `line 177` in torchvision/models/densenet.py
 
-# Training
+# Training (Classification)
 Run the command `python train.py`
 
 In `train.py`,  
@@ -25,7 +25,7 @@ the variable `backbone` is the classifiaction model you want to use
 
 I have no pre-trained weight of ExquisiteNet
 
-# Inference
+# Inference (Classification)
 Defined in the `util.py`  
 `infer_time, loss, acc = util.inference(model, dset["val"], dset_num["val"], batchs_num["val"], loss_func, device)`
 
