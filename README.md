@@ -34,5 +34,8 @@ Read `guide/`
 Please download [yolov5](https://github.com/ultralytics/yolov5) first.  
 `my.yaml` is the architecture of ExquisiteNetV2-Yolov5. 
 
+# Combined with Mask/Faster-RCNN
+Defined in the `ExquisiteNetV2_Mask_RCNN.py`.  
+
 # Citation
 please cite my [article](https://arxiv.org/abs/2105.09008)
