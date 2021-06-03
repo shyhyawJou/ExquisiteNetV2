@@ -68,10 +68,10 @@ def main():
     #backbone = 'senet18'
     #backbone = 'seln_net'
     #backbone = 'ghostnet'
-    backbone = 'SE-ExquisiteNetV1'
+    backbone = 'ExquisiteNetV1' 
     #backbone = 'LN-ExquisiteNetV1'
     #backbone = 'SE-ExquisiteNetV2'
-    backbone = 'LN-ExquisiteNetV2' 
+    backbone = 'ExquisiteNetV2' 
 
     device = th.device("cuda")
     if not th.cuda.is_available():
