@@ -218,13 +218,13 @@ def model(pretrained, backbone, class_num):
     if backbone == 'seln_net':
         model = se_resnet.seln_resnet18(num_classes=class_num)
     
-    if backbone == 'SE-ExquisiteNetV1':
+    if backbone == 'ExquisiteNetV1':
         model = ExquisiteNetV1(class_num)
     if backbone == 'LN-ExquisiteNetV1':
         model = ExquisiteNetV1_LN(class_num)
     if backbone == 'SE-ExquisiteNetV2':
         model = ExquisiteNetV2_SE(class_num)
-    if backbone == 'LN-ExquisiteNetV2':
+    if backbone == 'ExquisiteNetV2': 
         model = ExquisiteNetV2(class_num)
 
     print(model)
