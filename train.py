@@ -68,8 +68,8 @@ def main():
     #backbone = 'senet18'
     #backbone = 'seln_net'
     #backbone = 'ghostnet'
-    backbone = 'ExquisiteNetV1'
-    backbone = 'ExquisiteNetV2' 
+    backbone = 'SE-ExquisiteNetV1'
+    backbone = 'LN-ExquisiteNetV2' 
     #backbone = 'SE-ExquisiteNetV2'
     #backbone = 'LN-ExquisiteNetV1'
 
