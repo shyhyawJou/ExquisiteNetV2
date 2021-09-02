@@ -20,23 +20,23 @@ from PIL import Image
 import time
 
 class My_Dataset():
-    def __init__(self, img_dir, transform=None, is_int=False):
-        self.img_paths = [str(i) for i in p(img_dir).glob('*/*')]
-        self.classes = sorted([i.name for i in p(img_dir).glob('*') if i.is_dir()])
+    def __init__(self, folder, transform=None):
+        self.folder = folder
+        self.img_paths = sorted([str(i) for i in p(folder).glob('**/*') if i.suffix in [".jpg", ".JPG", ".jpeg", ".JPEG", ".png", "PNG", "tiff", "TIFF", "bmp", "BMP", "gif", "GIF"]])
+        self.classes = sorted([i.name for i in p(self.img_paths[0]).parents[1].iterdir()])
         self.transform = transform
-        self.dict = dict(zip(self.classes, np.arange(len(self.classes)).astype(np.int64)))
+        self.dict = dict(zip(self.classes, torch.arange(len(self.classes))))
 
-    def __getitem__(self, index):
+     def __getitem__(self, index):
         img = Image.open(self.img_paths[index])
         label = self.dict[p(self.img_paths[index]).parent.name]
         img_path = self.img_paths[index]
         if self.transform != None:
             img = self.transform(img)
-
         return img, label, img_path
         
     def __len__(self):
-        return len(self.img_paths)
+        return len(self.img_paths))
     
     def equalize_(self):
         num = dict(zip(self.classes, np.zeros(len(self.classes))))
