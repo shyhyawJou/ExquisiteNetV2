@@ -37,5 +37,8 @@ Please download [yolov5](https://github.com/ultralytics/yolov5) first.
 # Combined with Mask/Faster-RCNN
 Defined in the `ExquisiteNetV2_Mask_RCNN.py`.  
 
+# continuing updating some convenient function
+you can refer to library.ppt, if my code has defect or there is better algorithm, welcome to contact me.
+
 # Citation
 [article](https://arxiv.org/abs/2105.09008)
