@@ -37,6 +37,23 @@ class My_Dataset():
         
     def __len__(self):
         return len(self.img_paths)
+    
+    def equalize_(self):
+        num = dict(zip(self.classes, np.zeros(len(self.classes))))
+        for i in self.classes:
+            num[i] = len(os.listdir(pj(self.folder, i)))
+        min_num = min(num.values())
+        self.img_paths = []
+        for i in self.classes:
+            pp = np.asarray(list(p(pj(self.folder, i)).glob('*')))
+            num_in_class = len(pp)
+            pp = pp[permutation(num_in_class)].tolist()
+            self.img_paths += pp[:min_num]
+        self.img_paths = sorted(str(i) for i in self.img_paths)
+
+    def concat_(self, ds):
+        self.img_paths = sorted(self.img_paths + ds.img_paths)
+        assert self.classes == ds.classes
 
 class My_Sampler(th.utils.data.Sampler):
     def __init__(self, my_dset, init_seed):
