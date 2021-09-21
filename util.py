@@ -247,6 +247,40 @@ def model(pretrained, backbone, class_num):
     print(model)
     return model
 
+def class_to_tr_val_test(data_dir, tr_ratio, test_ratio, seed=None):
+    assert tr_ratio + test_ratio < 1.0
+    if seed is not None:
+        np.random.seed(seed)
+
+    for i in p(data_dir).iterdir():
+        paths = [str(x) for x in i.glob('**/*') if x.suffix in [".jpg", ".JPG", ".jpeg", ".JPEG", ".png", ".PNG", ".tiff", ".TIFF", ".bmp", ".BMP", ".gif", ".GIF"] and not x.is_dir()]
+        paths = np.asarray(paths)
+        total_num = len(paths)
+        paths = paths[np.random.permutation(total_num)]
+        
+        val_num = int((1 - tr_ratio - test_ratio) * total_num)
+        test_num = int(test_ratio * total_num)
+        tr_num = total_num - val_num - test_num
+
+        c = 1
+        for x in paths:
+            dst = list(p(x).parts)
+            if c <= tr_num:
+                set_dir = "train"
+            elif c <= tr_num + val_num:
+                set_dir = "val"
+            else:
+                set_dir = "test"
+
+            dst.insert(1, set_dir)
+            dst = p('/'.join(dst))  
+            dst.parent.mkdir(parents=True, exist_ok=True)  
+            p(x).rename(dst)
+            c += 1   
+        
+        shutil.rmtree(i)
+    print("Done!!!")
+
 def train(model, ckp, dset, dset_num, batchs_num, loss_func, optimizer, scheduler, epochs, device):
     
     best_acc = 0.0
