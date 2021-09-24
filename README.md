@@ -1,3 +1,7 @@
+# Update
+Change the initial learning rate and the step-down factor of learning rate to higher value (0.1, 0.7).  
+According to the experimental result, it is better for ExquisiteNetV2.
+
 # Requirements
 [Pytorch 1.7.0](https://pytorch.org/)  
 [torchsummaryX](https://github.com/nmhkahn/torchsummaryX)  
