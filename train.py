@@ -43,10 +43,10 @@ def main():
     epochs = 150
     seed = 21
     img_shape = [224,224]
-    lr = 0.05
+    lr = 0.1
     dampen = 0
     decay = 0
-    factor = 0.1
+    factor = 0.7
     ckp = 'ckp50/wt.pth'
     p(ckp).parent.mkdir(parents=True, exist_ok=True)
     lr_schedule = True
