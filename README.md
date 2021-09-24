@@ -1,4 +1,4 @@
-# Update
+# Update [2021/09/24]
 Change the initial learning rate and the step-down factor of learning rate to higher value (0.1, 0.7).  
 According to the experimental result, it is better for ExquisiteNetV2.
 
