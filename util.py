@@ -416,18 +416,18 @@ class SE(nn.Module):
 
 class SE_LN(nn.Module):
     def __init__(self, cin):
-        super(SE_LN, self).__init__()  
-        self.gavg = nn.AdaptiveAvgPool2d(1)
+        super(SE_LN, self).__init__()
+        self.gavg = nn.AdaptiveAvgPool2d((1,1))  
         self.ln = nn.LayerNorm(cin)
         self.act = nn.Sigmoid()
         
     def forward(self, x):
         y = x
         x = self.gavg(x)
-        x = x.view(-1,x.size()[1])
+        x = x.view(-1,x.size(1))
         x = self.ln(x)
-        x = self.act(x)   
-        x = x.view(-1,x.size()[1],1,1)
+        x = self.act(x)
+        x = x.view(-1,x.size(1),1,1)
         return x*y
 
 class DFSEBV1(nn.Module):
@@ -512,8 +512,8 @@ class FCT(nn.Module):
     def __init__(self, cin, cout):
         super(FCT, self).__init__()
         self.dw = nn.Conv2d(cin,cin,4,2,1,groups=cin,bias=False)
-        self.minpool = MinPool2d()
         self.maxpool = nn.MaxPool2d(2,ceil_mode=True)
+        self.minpool = MinPool2d(2,ceil_mode=True)
         self.pw = nn.Conv2d(3*cin, cout, 1, 1, bias=False)
         self.bn = nn.BatchNorm2d(cout)
 
@@ -521,7 +521,7 @@ class FCT(nn.Module):
         z = self.dw(x)
         y = self.minpool(x)
         x = self.maxpool(x)
-        x = th.cat((x,y,z), 1)
+        x = torch.cat((x,y,z), 1)
         x = self.pw(x)
         x = self.bn(x)
         return x
@@ -529,15 +529,15 @@ class FCT(nn.Module):
 class EVE(nn.Module):
     def __init__(self, cin, cout):
         super(EVE, self).__init__()
-        self.minpool = MinPool2d()
-        self.maxpool = nn.MaxPool2d(2,ceil_mode=True)
+        self.maxpool = nn.MaxPool2d(2, ceil_mode=True)
+        self.minpool = MinPool2d(2, ceil_mode=True)
         self.pw = nn.Conv2d(2*cin, cout, 1, 1, bias=False)
         self.bn = nn.BatchNorm2d(cout)
 
     def forward(self, x):
         y = self.minpool(x)
         x = self.maxpool(x)
-        x = th.cat((x,y), 1)
+        x = torch.cat((x,y), 1)
         x = self.pw(x)
         x = self.bn(x)
         return x
@@ -545,7 +545,7 @@ class EVE(nn.Module):
 class ME(nn.Module):
     def __init__(self, cin, cout):
         super(ME, self).__init__()
-        self.maxpool = nn.MaxPool2d(2,ceil_mode=True)
+        self.maxpool = nn.MaxPool2d(2, ceil_mode=True)
         self.pw = nn.Conv2d(cin, cout, 1, 1, bias=False)
         self.bn = nn.BatchNorm2d(cout)
 
@@ -556,16 +556,31 @@ class ME(nn.Module):
         return x
 
 class MinPool2d(nn.Module):
+    def __init__(self, ks, ceil_mode):
+        super(MinPool2d, self).__init__()
+        self.ks = ks
+        self.ceil_mode = ceil_mode
+
     def forward(self, x):
-        x = -F.max_pool2d(-x,2,ceil_mode=True)
+        return -F.max_pool2d(-x,self.ks,ceil_mode=self.ceil_mode)
+
+class DW(nn.Module):
+    def __init__(self, cin, dw_s):
+        super(DW, self).__init__()
+        self.dw = nn.Conv2d(cin,cin,dw_s,1,pad_num(dw_s),groups=cin)
+        self.act = nn.Hardswish()
+
+    def forward(self, x):
+        x = self.dw(x)
+        x = self.act(x)
         return x
 
 class ExquisiteNetV1(nn.Module):
-    def __init__(self, class_num):
+    def __init__(self, class_num, img_channels):
         super(ExquisiteNetV1, self).__init__()
         self.features = nn.Sequential(
             collections.OrderedDict([
-                ('ME1', ME(3,12)),  
+                ('ME1', ME(img_channels,12)),  
                 ('DFSEB1', DFSEBV1(12,3,3,False)),
                 
                 ('ME2', ME(12,50)),  
@@ -596,110 +611,44 @@ class ExquisiteNetV1(nn.Module):
         x = self.fc(x)
         return x
 
-class ExquisiteNetV1_LN(nn.Module):
-    def __init__(self, class_num):
-        super(ExquisiteNetV1_LN, self).__init__()
-        self.features = nn.Sequential(
-            collections.OrderedDict([
-                ('ME1', ME(3,12)),  
-                ('DFSEB1', DFSEBV1(12,3,3,True)),
-                
-                ('ME2', ME(12,50)),  
-                ('DFSEB2', DFSEBV1(50,3,3,True)),
-                
-                ('ME3', ME(50,100)),  
-                ('DFSEB3', DFSEBV1(100,3,3,True)),
-                
-                ('ME4', ME(100,200)),  
-                ('DFSEB4', DFSEBV1(200,3,3,True)),
-                
-                ('ME5', ME(200,350)),  
-                ('DFSEB5', DFSEBV1(350,3,3,True)),
-
-                ('conv', nn.Conv2d(350,640,1,1)),  
-                ('act', nn.Hardswish())
-                                    ])
-                                     )       
-        self.gavg = nn.AdaptiveAvgPool2d(1)
-        self.drop = nn.Dropout(0.2)
-        self.fc = nn.Linear(640, class_num)
-
-    def forward(self, x):
-        x = self.features(x)
-        x = self.gavg(x)
-        x = self.drop(x)
-        x = x.view(-1,x.size()[1])
-        x = self.fc(x)
-        return x
-
-class ExquisiteNetV2_SE(nn.Module):
-    def __init__(self, class_num):
-        super(ExquisiteNetV2_SE, self).__init__()
-        self.features = nn.Sequential(
-            collections.OrderedDict([
-                ('FCT', FCT(3,12)),  
-                ('DFSEB1', DFSEBV2(12,3,False)),
-
-                ('EVE', EVE(12,48)),  
-                ('DFSEB2', DFSEBV2(48,3,False)),
-
-                ('ME1', ME(48,96)),  
-                ('DFSEB3', DFSEBV2(96,3,False)),
-
-                ('ME2', ME(96,192)),  
-                ('DFSEB4', DFSEBV2(192,3,False)),
-
-                ('ME3', ME(192,384)),  
-                ('DFSEB5', DFSEBV2(384,3,False)),
-
-                ('dw', nn.Conv2d(384,384,3,1,pad_num(3),groups=384)),  
-                ('act', nn.Hardswish())
-                                    ])
-                                     )       
-        self.gavg = nn.AvgPool2d((7,7))
-        self.drop = nn.Dropout(0.2)
-        self.fc = nn.Linear(384,class_num)
-
-    def forward(self, x):
-        x = self.features(x)
-        x = self.gavg(x)
-        x = self.drop(x)
-        x = x.view(-1,x.size()[1])
-        x = self.fc(x)
-        return x
-
 class ExquisiteNetV2(nn.Module):
-    def __init__(self, class_num):
+    def __init__(self, class_num, img_channels):
         super(ExquisiteNetV2, self).__init__()
-        self.features = nn.Sequential(
-            collections.OrderedDict([
-                ('FCT', FCT(3,12)),  
-                ('DFSEB1', DFSEBV2(12,3,True)),
+        self.FCT = FCT(img_channels,12)  
+        self.DFSEB1 = DFSEBV2(12,3,True)
 
-                ('EVE', EVE(12,48)),  
-                ('DFSEB2', DFSEBV2(48,3,True)),
+        self.EVE = EVE(12,48)  
+        self.DFSEB2 = DFSEBV2(48,3,True)
 
-                ('ME1', ME(48,96)),  
-                ('DFSEB3', DFSEBV2(96,3,True)),
+        self.ME3 = ME(48,96)  
+        self.DFSEB3 = DFSEBV2(96,3,True)
 
-                ('ME2', ME(96,192)),  
-                ('DFSEB4', DFSEBV2(192,3,True)),
+        self.ME4 = ME(96,192)  
+        self.DFSEB4 = DFSEBV2(192,3,True)
 
-                ('ME3', ME(192,384)),  
-                ('DFSEB5', DFSEBV2(384,3,True)),
+        self.ME5 = ME(192,384)  
+        self.DFSEB5 = DFSEBV2(384,3,True)
 
-                ('dw', nn.Conv2d(384,384,3,1,pad_num(3),groups=384)),  
-                ('act', nn.Hardswish())
-                                    ])
-                                     )       
-        self.gavg = nn.AvgPool2d((7,7))
+        self.DW = DW(384,3)   
+
+        self.gavg = nn.AdaptiveAvgPool2d((1,1))
         self.drop = nn.Dropout(0.2)
         self.fc = nn.Linear(384,class_num)
 
-    def forward(self, x):
-        x = self.features(x)
+    def forward(self, x, label=None):
+        x = self.FCT(x)
+        x = self.DFSEB1(x) #
+        x = self.EVE(x)  
+        x = self.DFSEB2(x) #
+        x = self.ME3(x)  
+        x = self.DFSEB3(x) #
+        x = self.ME4(x)  
+        x = self.DFSEB4(x) #
+        x = self.ME5(x)  
+        x = self.DFSEB5(x) #
+        x = self.DW(x)     #
         x = self.gavg(x)
         x = self.drop(x)
-        x = x.view(-1,x.size()[1])
-        x = self.fc(x)
+        x = x.view(-1,x.size(1))
+        x = self.fc(x) if label is None else self.fc(x, label)
         return x
