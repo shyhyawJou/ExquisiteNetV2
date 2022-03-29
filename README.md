@@ -31,6 +31,10 @@ If you want to reproduce the result, you can follow the precedure below.
   tensorboard --logdir={tensorboard log path}
   ```
 
+- __Result__  
+  After training stop, You will get this result.
+  ![](asset/result.JPG)
+  
 # Evaluation
 ```
 python eval.py --data cifar10/test --weight md.pt
