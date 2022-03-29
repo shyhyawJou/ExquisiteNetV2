@@ -5,7 +5,11 @@
   * According to the experimental result, it is better for ExquisiteNetV2.
 
 # Requirements
-[Pytorch >= 1.8.0](https://pytorch.org/)
+- [Pytorch >= 1.8.0](https://pytorch.org/)
+- Tensorboard
+  ```
+  pip install tensorboard
+  ```
 
 # Train Cifar-10
 The best weight has been in the directory `weight/exp`.
