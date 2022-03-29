@@ -26,7 +26,7 @@ class DFSEBV2(nn.Module):
         super(DFSEBV2, self).__init__()
         self.pw1 = nn.Conv2d(cin, cin, 1, 1, bias=False)
         self.bn1 = nn.BatchNorm2d(cin)
-        self.act1 = nn.GELU()
+        self.act1 = nn.SiLU()
         self.dw1 = nn.Conv2d(cin,cin,dw_s,1,pad_num(dw_s),groups=cin)
         if is_LN:
             self.seln = SE_LN(cin)
