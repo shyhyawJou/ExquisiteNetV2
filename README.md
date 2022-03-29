@@ -24,7 +24,7 @@ If you want to reproduce the result, you can follow the precedure below.
      ```  
      Now you get the cifar10 raw image in the directory `cifar10`
      
-- __Train__
+- __Train from scratch__
   ```
   python train.py --data cifar10 --end_lr 0.001 --seed 21 --val_r 0.2
   ```
