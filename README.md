@@ -52,10 +52,7 @@ python eval.py --data cifar10/test --weight md.pt
 # Combined with yolov5
 Read `guide.pptx`  
 Please download [yolov5](https://github.com/ultralytics/yolov5) first.  
-`my.yaml` is the architecture of ExquisiteNetV2-Yolov5. 
-
-# Combined with Mask/Faster-RCNN
-Defined in the `ExquisiteNetV2_Mask_RCNN.py`.  
+`my.yaml` is the architecture of ExquisiteNetV2-Yolov5.  
 
 # Citation
 [https://arxiv.org/abs/2105.09008](https://arxiv.org/abs/2105.09008)
