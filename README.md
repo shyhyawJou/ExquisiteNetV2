@@ -4,6 +4,11 @@
   * Change the step-down factor of lr rate to higher value (0.7)  
   * According to the experimental result, it is better for ExquisiteNetV2.
 
+# Result
+| Data    |    Model       | Params | Top-1 Test Acc |
+| :-----: | :--------------: | :-----:  | :--------------: |
+| Cifar-10 | ExquisiteNetV2 |  0.51M | 92.52|
+
 # Requirements
 - [Pytorch >= 1.8.0](https://pytorch.org/)
 - Tensorboard
