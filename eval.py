@@ -71,8 +71,8 @@ def main():
     )          
 
     print('-'*20)
-    print(f"Val loss: {val_loss:.4f}")
-    print(f"Val Acc: {val_acc:.4f}\n")
+    print(f"loss: {val_loss:.4f}")
+    print(f"Acc: {val_acc:.4f}\n")
 
 
 if __name__ == '__main__':
