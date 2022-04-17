@@ -8,7 +8,7 @@
   * According to the experimental result, it is better for ExquisiteNetV2.
 
 # Result
-| Data     |    Model       | Params | Top-1 Test Acc |
+| Data     |    Model       | Params | Top-1 Test Acc (%) |
 | :-----:  | :------------: | :----: | :------------: |
 | Cifar-10 | ExquisiteNetV2 |  0.51M | 92.52          |
 | Mnist    | ExquisiteNetV2 |  0.51M | 99.71          |
