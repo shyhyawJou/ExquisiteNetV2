@@ -8,6 +8,7 @@
 | Data     |    Model       | Params | Top-1 Test Acc |
 | :-----:  | :------------: | :----: | :------------: |
 | Cifar-10 | ExquisiteNetV2 |  0.51M | 92.52          |
+| Mnist    | ExquisiteNetV2 |  0.51M | 99.71          |
 
 # Requirements
 - [Pytorch >= 1.8.0](https://pytorch.org/)
