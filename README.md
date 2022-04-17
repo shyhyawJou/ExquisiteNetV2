@@ -1,3 +1,6 @@
+[![arXiv](https://img.shields.io/badge/arXiv-2105.090008-b31b1b.svg)](https://arxiv.org/abs/2105.090008)
+
+
 # Update
 - __[2021/09/24]__
   * Change the initial learning rate to higher value (0.1)
