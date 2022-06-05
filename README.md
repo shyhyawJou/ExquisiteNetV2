@@ -35,7 +35,7 @@ If you want to reproduce the result, you can follow the precedure below.
      
 - __Train from scratch__
   ```
-  python train.py --data cifar10 --end_lr 0.001 --seed 21 --val_r 0.2 --
+  python train.py --data cifar10 --end_lr 0.001 --seed 21 --val_r 0.2 --amp
   ```
 
 - __Tensorboard__  
