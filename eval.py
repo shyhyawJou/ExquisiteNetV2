@@ -15,11 +15,11 @@ from img import *
 
 def get_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data', type=str, default=None, help="path of dataset")
-    parser.add_argument('--weight', type=str, default=None, help="path of pretrained weight")
-    parser.add_argument('--bs', type=int, default=64)
-    parser.add_argument('--imgsz', type=int, default=224, help="image size")
-    parser.add_argument('--worker', default=4)
+    parser.add_argument('-data', type=str, default=None, help="path of dataset")
+    parser.add_argument('-weight', type=str, default=None, help="path of pretrained weight")
+    parser.add_argument('-bs', type=int, default=64)
+    parser.add_argument('-imgsz', type=int, default=224, help="image size")
+    parser.add_argument('-worker', default=4)
     return parser.parse_args()
 
 
