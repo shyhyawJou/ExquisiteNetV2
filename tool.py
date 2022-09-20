@@ -86,7 +86,7 @@ def train_acc(
         tb_writer.add_scalars("Acc", acc, epoch + 1)
 
         if opt.param_groups[0]['lr'] < end_lr: 
-            if lr_warmer.up_count == lr_warmer.steps:
+            if lr_warmer.up_count == lr_warmer.step:
                 print('early stop!')
                 print("End training")
                 break
