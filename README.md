@@ -38,12 +38,6 @@ If you want to reproduce the result, you can follow the precedure below.
   python train.py -data cifar10 -end_lr 0.001 -seed 21 -val_r 0.2 -amp
   ```
 
-- __Tensorboard__  
-  My code will tell you the log path.
-  ```
-  tensorboard --logdir={tensorboard log path}
-  ```
-
 - __Result__  
   After training stop, You will get this result.
   ![](asset/result.JPG)
