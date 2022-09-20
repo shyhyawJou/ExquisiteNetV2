@@ -139,24 +139,37 @@ def create_save_dir(save_root):
     
     return save_dir
 
-class LR_Warmer():
-    def __init__(self, optimizer, steps, initial_lr_factor):
-        assert isinstance(steps, int)
-        assert initial_lr_factor > 0
-        initial_lr = optimizer.param_groups[-1]['lr']
-        self.initial_lr = initial_lr
-        self.steps = steps
-        if steps != 0:
-            self.step_size = (initial_lr - initial_lr / initial_lr_factor) / steps
-            optimizer.param_groups[-1]['lr'] /= initial_lr_factor
-        self.up_count = 0
-        self.optimizer = optimizer
+class LR_Warmer:
+    def __init__(self, opt, step=0, scale=1000):    
+        assert isinstance(step, int), "step should be int"
+        assert scale > 0, "scale should > 0"
+        
+        if step != 0:
+            init_lr, step_size = [], []
+            
+            for param_group in opt.param_groups:
+                lr = param_group["lr"]
+                param_group["lr"] /= scale
+                init_lr.append(lr)
+                step_size.append((lr - lr / scale) / step)
+            
+            self.opt = opt
+            self.step = step
+            self.init_lr = init_lr
+            self.step_size = step_size
+            self.up_count = 0
     
     def up(self):
-        if self.up_count != self.steps:
-            self.optimizer.param_groups[-1]['lr'] += self.step_size
+        if self.up_count != self.step:
+            for i, param_group in enumerate(self.opt.param_groups):
+                param_group['lr'] += self.step_size[i]
+                
             self.up_count += 1
-            if self.up_count == self.steps:
-                self.optimizer.param_groups[-1]['lr'] = self.initial_lr
+            
+            if self.up_count == self.step:
+                for i, param_group in enumerate(self.opt.param_groups):
+                    param_group['lr'] = self.init_lr[i]
+
+
 
 
