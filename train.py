@@ -29,7 +29,7 @@ def get_args():
     parser.add_argument('-end_lr', type=float, default=0.01, help="stop training when the lr less than end_lr")
     parser.add_argument('-wd', type=float, default=1e-4, help="weight decay")
     parser.add_argument('-imgsz', type=int, default=224, help="image size")
-    parser.add_argument('-val_r', type=float, default=0.2, help="ratio of val dataset accounting for training set")
+    parser.add_argument('-val_r', type=float, default=0, help="ratio of val dataset accounting for training set")
     parser.add_argument('-worker', default=4)
     parser.add_argument('-seed', default=None)
     return parser.parse_args()
@@ -38,7 +38,7 @@ def get_args():
 def main():
     args = get_args()
 
-    args.save_dir = create_save_dir(args.save_dir)
+    create_save_dir(args.save_dir)
 
     # for jupyter notebook
     del_ipynb_ckps(args.data)
