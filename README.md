@@ -47,10 +47,6 @@ If you want to reproduce the result, you can follow the precedure below.
 python eval.py -data cifar10/test -weight md.pt
 ```
 
-# Combined with yolov5
-Read `guide.pptx`  
-Please download [yolov5](https://github.com/ultralytics/yolov5) first.  
-`my.yaml` is the architecture of ExquisiteNetV2-Yolov5.  
 
 
 If my code has defect or there is better algorithm, welcome to contact me :)
