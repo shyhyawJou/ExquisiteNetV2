@@ -134,8 +134,6 @@ def main():
     print("="*50)
     if args.amp:
         print("train with auto mixed precision training!!!")
-    print("\nFrom epoch 2, you can watch tensorboard, by "
-          f"typing 'tensorboard --logdir={args.save_dir}/tensorboard'")
     print("\nstart training...\n")
 
     tr_time, end_epoch = train_acc(
