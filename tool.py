@@ -24,7 +24,7 @@ def train_acc(
 
     t0 = time.time()
     for epoch in range(total_epoch):
-        print(f"\nEpoch {epoch+1}/{total_epoch}")
+        print(f"\nEpoch {epoch+1}")
         print('-' * 10)
         tr_correct = 0
         acc, loss = {}, {"train":0}
