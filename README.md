@@ -52,8 +52,5 @@ Read `guide.pptx`
 Please download [yolov5](https://github.com/ultralytics/yolov5) first.  
 `my.yaml` is the architecture of ExquisiteNetV2-Yolov5.  
 
-# Citation
-[https://arxiv.org/abs/2105.09008](https://arxiv.org/abs/2105.09008)
-
 
 If my code has defect or there is better algorithm, welcome to contact me :)
