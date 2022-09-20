@@ -1,6 +1,5 @@
 import torch
 from torch.cuda.amp import autocast, GradScaler
-from torch.utils.tensorboard import SummaryWriter
 
 from pathlib import Path as p
 import time
@@ -19,7 +18,6 @@ def train_acc(
     ds_num = len(ds["train"].dataset)
     scaler = GradScaler()
     lr_warmer = LR_Warmer(opt, 40, 1000)
-    tb_writer = SummaryWriter(pj(save_dir, "tensorboard"), flush_secs=120)
 
 
     t0 = time.time()
@@ -81,9 +79,6 @@ def train_acc(
         print(f"LR in this epoch: {opt.param_groups[-1]['lr'] : .6f}")
 
         schdr.step(loss["train"])
-
-        tb_writer.add_scalars("Loss", loss, epoch + 1)
-        tb_writer.add_scalars("Acc", acc, epoch + 1)
 
         if opt.param_groups[0]['lr'] < end_lr: 
             if lr_warmer.up_count == lr_warmer.step:
